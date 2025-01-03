@@ -126,4 +126,6 @@ print(c.ret_habitat())
 print(c.sound())
 print(d.ret_habitat())
 print(d.sound())
+print("nothing")
+print("For check")
 
