@@ -130,3 +130,5 @@ SELECT * FROM `Students` WHERE `Student_ID` > 100;
 SELECT * FROM `Students` ORDER BY `Enrollment_year` DESC;
 SELECT * FROM `Students` ORDER BY `First_name` ASC;
 SELECT DISTINCT Department FROM `Students`;
+SELECT `Gender`, COUNT(*) FROM `Students` GROUP BY `Gender`;
+SELECT `First_name`_Name, COUNT(*) FROM `Students` GROUP BY `Last_Name`
