@@ -118,10 +118,15 @@ INSERT INTO Students (Student_ID,First_name,Last_Name , Gender, Date_of_birth, E
 (100, 'Ian', 'Jackson', 'M', '2002-07-03', 'ian.jackson@mail.com', '4623444750', '770 Oak Street', 'Mechanical Engineering', 2019);
 
 SELECT * FROM Students;
-Select * FROM Students WHERE `Student_ID` = 10;
+Select * FROM Students WHERE `Student_ID` < 10;
 SELECT  DISTINCT Department FROM `Students`;
 SELECT * from Students WHERE `Gender`= 'M';
 
 SELECT DISTINCT `Last_Name` FROM `Students`;
-
- 
+Show TABLES;
+INSERT INTO `Students` VALUES 
+    (101, 'Quinn', 'Turner', 'M', '2002-03-10', 'quinn.turner@example.com', '8841423705', '465 Pine Street', 'Political Science', 2022);
+SELECT * FROM `Students` WHERE `Student_ID` > 100;
+SELECT * FROM `Students` ORDER BY `Enrollment_year` DESC;
+SELECT * FROM `Students` ORDER BY `First_name` ASC;
+SELECT DISTINCT Department FROM `Students`;
