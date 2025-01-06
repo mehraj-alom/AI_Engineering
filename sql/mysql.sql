@@ -125,10 +125,59 @@ SELECT * from Students WHERE `Gender`= 'M';
 SELECT DISTINCT `Last_Name` FROM `Students`;
 Show TABLES;
 INSERT INTO `Students` VALUES 
-    (101, 'Quinn', 'Turner', 'M', '2002-03-10', 'quinn.turner@example.com', '8841423705', '465 Pine Street', 'Political Science', 2022);
+    (102, 'Quinn', 'Turner', 'M', '2002-12-31', 'quinn.turner@example.com', '8841423705', '465 Pine Street', 'Computer Science', 2022);
 SELECT * FROM `Students` WHERE `Student_ID` > 100;
 SELECT * FROM `Students` ORDER BY `Enrollment_year` DESC;
 SELECT * FROM `Students` ORDER BY `First_name` ASC;
 SELECT DISTINCT Department FROM `Students`;
 SELECT `Gender`, COUNT(*) FROM `Students` GROUP BY `Gender`;
-SELECT `First_name`_Name, COUNT(*) FROM `Students` GROUP BY `Last_Name`
+SELECT `First_name`, COUNT(`First_name`) FROM `Students` GROUP BY `Last_Name`;
+SELECT * From `Students` WHERE `Date_of_birth` = '2002-12-31' AND `Department` = 'Computer Science';
+
+
+--******************************************New Database**********************
+CREATE DATABASE IF not EXISTS Employee;
+CREATE TABLE IF NOT EXISTS Emp
+    ( Employee_ID INT PRIMARY KEY,
+    First_Name VARCHAR(200),
+    Last_Name VARCHAR(200),
+    Gender CHAR(1),
+    Date_of_Birth DATE,
+    Email VARCHAR(200),
+    Phone VARCHAR(15),
+    Address VARCHAR(200),
+    Department VARCHAR(100),
+    Position VARCHAR(40),
+    Joining_Date DATE,
+    Salary INT
+);
+INSERT INTO `Emp` (Employee_ID, First_Name, Last_Name, Gender, Date_of_Birth, Email, Phone, Address, Department, Position, Joining_Date, Salary) VALUES
+(1, 'John', 'Smith', 'M', '1990-05-15', 'john.smith@mail.com', '9876543210', '12 Elm Street', 'HR', 'Manager', '2015-01-12', 85000),
+(2, 'Emily', 'Davis', 'F', '1988-07-21', 'emily.davis@mail.com', '8765432109', '34 Oak Avenue', 'Marketing', 'Specialist', '2017-03-18', 65000),
+(3, 'Michael', 'Johnson', 'M', '1992-08-19', 'michael.johnson@mail.com', '7654321098', '56 Maple Drive', 'IT', 'Developer', , 75000),
+(4, 'Sarah', 'Brown', 'F', '1995-03-10', 'sarah.brown@mail.com', '6543210987', '78 Pine Lane', 'Finance', 'Analyst', '2018-09-15', 72000),
+(5, 'David', 'Wilson', 'M', '1985-12-25', 'david.wilson@mail.com', '5432109876', '90 Birch Road', 'Operations', 'Supervisor', '2016-02-20', 68000),
+(6, 'Olivia', 'Taylor', 'F', '1993-11-30', 'olivia.taylor@mail.com', '4321098765', '101 Cedar Street', 'IT', 'Project Manager', '2019-07-22', 88000),
+(7, 'James', 'Anderson', 'M', '1991-01-14', 'james.anderson@mail.com', '3210987654', '23 Walnut Avenue', 'Marketing', 'Coordinator', '2021-05-17', 52000),
+(8, 'Sophia', 'Martinez', 'F', '1996-06-05', 'sophia.martinez@mail.com', '2109876543', '45 Willow Boulevard', 'HR', 'Recruiter', '2022-03-25', 48000),
+(9, 'Robert', 'Lee', 'M', '1987-09-12', 'robert.lee@mail.com', '1098765432', '67 Ashwood Lane', 'Finance', 'Accountant', '2014-11-10', 70000),
+(10, 'Isabella', 'Hernandez', 'F', '1994-04-22', 'isabella.hernandez@mail.com', '9087654321', '89 Poplar Street', 'Operations', 'Assistant Manager', '2018-08-05', 75000),
+(11, 'William', 'King', 'M', '1990-02-10', 'william.king@mail.com', '8076543210', '123 Palm Avenue', 'IT', 'System Administrator', '2019-11-30', 64000),
+(12, 'Ava', 'Wright', 'F', '1992-07-18', 'ava.wright@mail.com', '7065432109', '56 Sycamore Road', 'Marketing', 'SEO Specialist', '2020-04-14', 57000),
+(13, 'Ethan', 'Lopez', 'M', '1989-10-25', 'ethan.lopez@mail.com', '6054321098', '98 Cypress Lane', 'Finance', 'Financial Analyst', '2015-10-20', 71000),
+(14, 'Mia', 'Perez', 'F', '1993-01-28', 'mia.perez@mail.com', '5043210987', '45 Redwood Street', 'HR', 'HR Assistant', '2021-02-10', 46000),
+(15, 'Alexander', 'White', 'M', '1988-09-15', 'alexander.white@mail.com', '4032109876', '76 Chestnut Avenue', 'Operations', 'Logistics Manager', '2017-06-12', 73000),
+(16, 'Charlotte', 'Hall', 'F', '1995-03-05', 'charlotte.hall@mail.com', '3021098765', '67 Magnolia Court', 'IT', 'UI/UX Designer', '2022-01-15', 55000),
+(17, 'Daniel', 'Allen', 'M', '1990-11-30', 'daniel.allen@mail.com', '2010987654', '12 Lilac Road', 'Marketing', 'Content Manager', '2020-07-20', 60000),
+(18, 'Emma', 'Scott', 'F', '1994-06-17', 'emma.scott@mail.com', '1098765432', '45 Hickory Boulevard', 'Finance', 'Tax Specialist', '2018-12-01', 78000),
+(19, 'Henry', 'Adams', 'M', '1991-05-20', 'henry.adams@mail.com', '9087654321', '90 Pinehurst Drive', 'Operations', 'Warehouse Supervisor', '2016-03-15', 65000),
+(20, 'Amelia', 'Carter', 'F', '1996-08-22', 'amelia.carter@mail.com', '8076543210', '123 Aspen Avenue', 'HR', 'HR Manager', '2019-09-10', 84000);
+
+SELECT * FROM `Emp`;
+SELECT `Department` , AVG(`Salary`) FROM `Emp` GROUP BY `Department`;
+SELECT `Department` , SUM(`Salary`) FROM `Emp` GROUP BY `Department`;
+SELECT `Department` , COUNT(`Salary`) FROM `Emp` GROUP BY `Department`;
+SELECT * FROM `Emp` WHERE `Joining_Date`<='2020-06-11';
+SELECT `Department` , AVG(`Salary`) FROM `Emp` GROUP BY `Department` HAVING AVG(`Salary`) > 70000;
+SELECT 'Position' , Count('Position') FROM `Emp` GROUP BY `Position` Having `Position` = 'Developer';
+SELECT `Department`,COUNT('Position') FROM `Emp` GROUP BY `Position`;
