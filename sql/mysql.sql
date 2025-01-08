@@ -339,3 +339,5 @@ ON B.`Roll_No_` = C.`Linkage_`
 UNION
 SELECT B.*,C.* FROM `BCA` AS B RIGHT JOIN `Extra_c` AS C
 ON B.`Roll_No_` = C.`Linkage_`;                                  -- FULL JOIN ************************
+
+SELECT B.* , C.* FROM `BCA` AS B CROSS JOIN `Extra_c`  AS C ; -- CROSS JOIN ************************
