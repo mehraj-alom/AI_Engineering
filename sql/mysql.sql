@@ -235,10 +235,49 @@ ALTER TABLE `Emp` MODIFY `Skill` VARCHAR(50) NOT NULL DEFAULT 'u';
 
 DESC `Emp`;
 
-ALTER Table `Emp` CHANGE COLUMN `Skill` `Skill_` VARCHAR(100) NOT Null DEFAULT 'UR';
+ALTER Table `Emp` CHANGE COLUMN `Skill` `Skill_` VARCHAR(100) NOT NUll DEFAULT 'UR';
 
 ALTER Table `Emp` DROP COLUMN `Skill_`;
 
 ALTER Table `Emp` RENAME TO `EMPL`;
 ALTER Table `EMPL` RENAME TO `Emp`;
+
+UPDATE `Emp` SET `First_Name` = "Mehraj Alom" , `Email` = " mehrajalom0@gmail.com " WHERE `Employee_ID` = 10; 
+SET SQL_SAFE_UPDATES = 0;
+UPDATE `Emp` SET `Phone` = '1234656789';
+SET SQL_SAFE_UPDATES = 1;
+DELETE  FROM `Emp` WHERE `Employee_ID` = 2;
+SELECT * FROM `Emp`;
+
+CREATE TABLE Customer (
+    Id_ INT PRIMARY KEY NOT NULL,
+    Name_ VARCHAR(255),
+    Pincode_ VARCHAR(30)
+);
+INSERT INTO `Customer` (`Id_`,`Name_`,`Pincode_`) VALUES
+(1,"Mehraj Alom","788713"),
+(2,"Saharul Alom","788712")
+
+SELECT * FROM `Customer`;
+
+--CREATE Table Order_Deatails(
+    --Order_Id INT PRIMARY KEY NOT NULL,
+    --Order_Date DATE ,
+    --New_Id INT,
+    --Foreign Key (New_Id) REFERENCES Customer(Id_) ON DELETE CASCADE
+--);
+CREATE Table Order_Deatails(
+    Order_Id INT PRIMARY KEY NOT NULL,
+    Order_Date DATE ,
+    New_Id INT,
+    Foreign Key (New_Id) REFERENCES Customer(Id_) ON DELETE SET NULL
+);
+INSERT INTO `Order_Deatails`(`Order_Id`,`Order_Date`,`New_Id`) 
+VALUES(6,'2024-12-31',1);
+
+INSERT INTO `Order_Deatails`(`Order_Id`,`Order_Date`,`New_Id`) 
+VALUES(7,'2024-12-30',2);
+SELECT * FROM `Order_Deatails`;
+DELETE FROM `Customer` WHERE `Id_`= 1;
+DELETE FROM `Customer` Where `Id_` = 2;
 
