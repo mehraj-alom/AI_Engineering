@@ -281,3 +281,61 @@ SELECT * FROM `Order_Deatails`;
 DELETE FROM `Customer` WHERE `Id_`= 1;
 DELETE FROM `Customer` Where `Id_` = 2;
 
+REPLACE INTO `Customer` (`Id_`,`Name_`) VALUES
+(1,"Hello");
+REPLACE INTO `Customer` SET `Id_` = 3,`Name_` = "World";
+REPLACE INTO `Customer` SET `Id_` = 3,`Name_` = "Worlddd";
+ALTER Table `Customer` DROP COLUMN `Pincode_`;
+
+--**********************************************JOIN****************************
+CREATE TABLE BCA (
+    Roll_No_ INT PRIMARY KEY NOT NULL,
+    Name_ VARCHAR(60),
+    Stream_ VARCHAR(20)
+);
+REPLACE INTO `BCA` (`Roll_No_`,`Name_`,`Stream_`) VALUES --Replace used instead of Insert
+(1,"Mehraj","Science"),
+(2,"Mehraz","Arts"),
+(3,"Mussarraf","Commerce"),
+(4,"Madhumay","Science"),
+(5,"Jahir","Science");
+
+SELECT * FROM `BCA`;
+
+CREATE Table Extra_c(
+    Serial_ INT PRIMARY KEY NOT NULL,
+    Game_Name_ VARCHAR(50),
+    Award_ VARCHAR(30),
+    Linkage_ INT,
+    Foreign Key (Linkage_) REFERENCES BCA(Roll_No_)
+);
+INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`,`Award_`,`Linkage_`) VALUES
+(101,"Basketball","National_player",1),
+(102,"Cricket","Home_Ground_Best",2);
+
+INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`,`Award_`,`Linkage_`) VALUES
+(103,"Football","DIstrict_Level",5);
+SELECT * FROM `Extra_c`;
+
+SELECT B.* , C.* FROM `BCA`AS B LEFT JOIN `Extra_c` AS C
+ON B.`Roll_No_` = C.`Linkage_`;                               -- LEFT JOIN ****************
+
+SELECT B.Name_,C.Game_Name_ FROM `BCA`AS B LEFT JOIN `Extra_c` AS C
+ON B.`Roll_No_` = C.`Linkage_`;                               -- LEFT JOIN ******************
+
+
+INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`,`Award_`,`Linkage_`) VALUES
+(108,"Football","DIstrict_Level",5),
+(105,"Football","DIstrict_Level",5),
+(106,"Football","DIstrict_Level",5),
+(107,"Football","DIstrict_Level",5);
+INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`) VALUES
+(109,"WHATever");
+SELECT B.* , C.* FROM `BCA` AS B RIGHT JOIN `Extra_c` AS C
+ON B.`Roll_No_` = C.`Linkage_`;                                  -- RIGHT JOIN *******************
+
+SELECT B.* , C.* FROM `BCA` AS B LEFT JOIN `Extra_c` AS C 
+ON B.`Roll_No_` = C.`Linkage_` 
+UNION
+SELECT B.*,C.* FROM `BCA` AS B RIGHT JOIN `Extra_c` AS C
+ON B.`Roll_No_` = C.`Linkage_`;                                  -- FULL JOIN ************************
