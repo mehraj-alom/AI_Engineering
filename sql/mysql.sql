@@ -181,3 +181,64 @@ SELECT * FROM `Emp` WHERE `Joining_Date`<='2020-06-11';
 SELECT `Department` , AVG(`Salary`) FROM `Emp` GROUP BY `Department` HAVING AVG(`Salary`) > 70000;
 SELECT 'Position' , Count('Position') FROM `Emp` GROUP BY `Position` Having `Position` = 'Developer';
 SELECT `Department`,COUNT('Position') FROM `Emp` GROUP BY `Position`;
+SELECT `Department`,COUNT(*) AS `EMP_COUNT` FROM `Emp` GROUP BY `Department` HAVING MIN(`Joining_Date`) > '2018-12-31';
+SELECT `Department`,`Joining_Date`,COUNT(*) AS `Dep` FROM `Emp` GROUP BY (`Department`);
+CREATE Table new_table(
+    cust_id INT PRIMARY KEY NOT NULL,
+    Cust_name VARCHAR(255) UNIQUE,
+    New_key INT,
+    default int DEFAULT = 0.01
+    Foreign Key (New_key) REFERENCES Emp(Employee_ID)
+);
+INSERT INTO new_table (cust_id,Cust_name,New_key) VALUES
+(109,"AAAA",10),
+(201,"BBBB",20,);
+INSERT INTO new_table (cust_id,Cust_name,New_key) VALUES
+(301,"ccc",18)
+
+SELECT * FROM new_table;
+SELECT * from `Emp` WHERE `Employee_ID` = 10;
+SELECT --  #######################################ADVANCE More to explore########################
+    new_table.cust_id, 
+    new_table.Cust_name, 
+    Emp.Employee_ID, 
+    Emp.First_Name, 
+    Emp.Last_Name 
+FROM 
+    new_table
+JOIN 
+    Emp ON new_table.New_key = Emp.Employee_ID;
+
+CREATE Table new_11 (
+    cust_id INT PRIMARY KEY NOT NULL,
+    Cust_name VARCHAR(255) UNIQUE,
+    New_key INT,
+   `default` FLOAT DEFAULT 0.01
+);
+INSERT INTO new_11(cust_id,Cust_name,New_key)VALUES
+(1011,'kjdnksn',67),
+(1029,'sgggasu',56);
+SELECT * FROM new_11;
+DROP TABLE new_11;
+
+ALTER TABLE `Emp` ADD `Skill` VARCHAR(255) DEFAULT "Upskill req";
+
+SELECT * FROM `Emp`;
+
+ALTER TABLE `Emp` MODIFY `Skill` CHAR(2) DEFAULT 'UR';
+
+ALTER TABLE `Emp` ADD `Skill` VARCHAR(255) DEFAULT "Upskill req";
+
+SELECT * FROM `Emp`;
+
+ALTER TABLE `Emp` MODIFY `Skill` VARCHAR(50) NOT NULL DEFAULT 'u';
+
+DESC `Emp`;
+
+ALTER Table `Emp` CHANGE COLUMN `Skill` `Skill_` VARCHAR(100) NOT Null DEFAULT 'UR';
+
+ALTER Table `Emp` DROP COLUMN `Skill_`;
+
+ALTER Table `Emp` RENAME TO `EMPL`;
+ALTER Table `EMPL` RENAME TO `Emp`;
+
