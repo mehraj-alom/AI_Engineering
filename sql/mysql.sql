@@ -307,8 +307,8 @@ CREATE Table Extra_c(
     Game_Name_ VARCHAR(50),
     Award_ VARCHAR(30),
     Linkage_ INT,
-    Foreign Key (Linkage_) REFERENCES BCA(Roll_No_)
-);
+    Foreign Key (Linkage_) REFERENCES BCA(Roll_No_) ON DELETE CASCADE
+    );
 INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`,`Award_`,`Linkage_`) VALUES
 (101,"Basketball","National_player",1),
 (102,"Cricket","Home_Ground_Best",2);
@@ -324,11 +324,11 @@ SELECT B.Name_,C.Game_Name_ FROM `BCA`AS B LEFT JOIN `Extra_c` AS C
 ON B.`Roll_No_` = C.`Linkage_`;                               -- LEFT JOIN ******************
 
 
-INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`,`Award_`,`Linkage_`) VALUES
-(108,"Football","DIstrict_Level",5),
-(105,"Football","DIstrict_Level",5),
-(106,"Football","DIstrict_Level",5),
-(107,"Football","DIstrict_Level",5);
+-- INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`,`Award_`,`Linkage_`) VALUES
+-- (108,"Football","DIstrict_Level",5),
+-- (105,"Football","DIstrict_Level",5),
+-- (106,"Football","DIstrict_Level",5),
+-- (107,"Football","DIstrict_Level",5);
 INSERT INTO `Extra_c`(`Serial_`,`Game_Name_`) VALUES
 (109,"WHATever");
 SELECT B.* , C.* FROM `BCA` AS B RIGHT JOIN `Extra_c` AS C
@@ -340,4 +340,86 @@ UNION
 SELECT B.*,C.* FROM `BCA` AS B RIGHT JOIN `Extra_c` AS C
 ON B.`Roll_No_` = C.`Linkage_`;                                  -- FULL JOIN ************************
 
-SELECT B.* , C.* FROM `BCA` AS B CROSS JOIN `Extra_c`  AS C ; -- CROSS JOIN ************************
+SELECT B.* , C.* FROM `BCA` AS B CROSS JOIN `Extra_c`  AS C ; -- CROSS JOIN (Cartisian Product)************************
+
+SELECT B.* , C.* FROM `BCA` AS B CROSS JOIN `BCA` AS C ;     -- SELF JOIN 
+
+SELECT 
+    `BCA`.`Name_` AS STudent_Name ,
+    `BCA`.`Stream_`AS Strem_,
+    `Extra_c`.`Game_Name_` AS GAME_PLAYED
+FROM
+    `BCA`
+JOIN `Extra_c` ON
+    `BCA`.`Roll_No_` = `Extra_c`.`Linkage_`; -- INNER JOIN ************************ 
+DELETE FROM `BCA` WHERE `Roll_No_` = 5;
+
+SELECT * FROM `BCA`;
+
+SELECT B.`Name_` AS STudent_Name ,
+    B.`Stream_`AS Strem_,
+    C.`Game_Name_` AS GAME_PLAYED
+FROM `BCA` AS B ,
+    `Extra_c` AS C
+WHERE B.`Roll_No_` = C.`Linkage_`; -- INNER JOIN  WITHOUT JOIN WORD ************************   
+
+-- *******************************************SET OPERATIONS********************************
+CREATE Table Dept1(
+    EMP_Id INT PRIMARY KEY NOT NULL,
+    Emp_Name VARCHAR(50),
+    Role VARCHAR(50)
+);  
+INSERT INTO Dept1 (EMP_Id, Emp_Name, Role) VALUES
+(1, 'John Smith', 'Manager'),
+(2, 'Emily Davis', 'Salesman'),
+(3, 'Michael Johnson', 'Devoloper'),
+(4, 'Sarah Brown', 'Analyst'),
+(5, 'David Wilson', 'Supervisor');
+
+INSERT INTO Dept2 (EMP_Id, Emp_Name, Role) VALUES
+(6, 'Olivia Taylor', 'Project Manager'),
+(7, 'James Anderson', 'Coordinator'),
+(8, 'Sophia Martinez', 'Devoloper'),
+(9, 'Robert Lee', 'Accountant'),
+(10, 'Isabella Hernandez', 'Assistant Manager');
+
+SELECT * FROM `Dept1`;
+CREATE TABLE Dept2(
+    EMP_Id INT PRIMARY KEY NOT NULL,
+    Emp_Name VARCHAR(50),
+    Role VARCHAR(50)
+);   
+ 
+
+
+SELECT * FROM Dept2;
+
+SELECT * FROM Dept1 UNION SELECT * FROM Dept2; -- UNION ****************
+SELECT * FROM `Dept1` WHERE `Role` = 'Devoloper'
+UNION 
+SELECT * FROM `Dept2` WHERE `Role` = 'Devoloper';      -- UNION ****************  
+INSERT INTO `Dept2` (EMP_Id, Emp_Name, Role) VALUES
+(1, 'John Smith', 'Manager');
+Select `Dept2`.* FROM `Dept2` INNER JOIN `Dept1` USING(`Role`);-- INTERSECTION ****************
+SELECT D1.*                                        -- Matches rows where the "Role" is the same(Intersaction)
+FROM Dept1 AS D1
+INNER JOIN Dept2 AS D2
+ON D1.Role = D2.Role;    
+
+SELECT D1.* FROM `Dept1` AS D1 
+INNER JOIN `Dept2` AS D2
+ON `D1`.`Role` = `D2`.`Role`;                             -- Matches rows where the "Role" is the same(Intersaction)
+                                                            -- MINUS OPERATION
+SELECT * FROM `Dept1`        
+WHERE `EMP_Id` NOT IN(                                          
+    SELECT `EMP_Id` FROM `Dept2` WHERE `EMP_Id` IS NOT NULL 
+);
+--*****************************************MINUS OPERATION********************************
+SELECT `Role` FROM `Dept1`                                     
+WHERE `Role`NOT In (
+    SELECT `Role` FROM `Dept2`
+);
+SELECT * FROM `Dept1` 
+WHERE `EMP_Id` NOT IN(
+    SELECT `EMP_Id` FROM `Dept2` WHERE `EMP_Id` IS NOT NULL
+);
