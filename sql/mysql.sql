@@ -423,3 +423,164 @@ SELECT * FROM `Dept1`
 WHERE `EMP_Id` NOT IN(
     SELECT `EMP_Id` FROM `Dept2` WHERE `EMP_Id` IS NOT NULL
 );
+
+-- **************************************************************************Subquaries *************************************************
+-- Create Table: Employees
+CREATE TABLE Departments (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50)
+);
+
+INSERT INTO Departments (Dept_ID, Dept_Name)
+VALUES
+(1, 'HR'),
+(2, 'Finance'),
+(3, 'IT'),
+(4, 'Marketing');
+
+CREATE TABLE Employees (
+    Emp_ID INT PRIMARY KEY,
+    Emp_Name VARCHAR(50),
+    Dept_ID INT,
+    Salary DECIMAL(10, 2),
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
+);
+
+INSERT INTO Employees (Emp_ID, Emp_Name, Dept_ID, Salary)
+VALUES
+(101, 'Alice', 1, 50000),
+(102, 'Bob', 2, 60000),
+(103, 'Charlie', 3, 55000),
+(104, 'Diana', 1, 45000),
+(105, 'Eve', 4, 52000);
+
+CREATE TABLE Projects (
+    Proj_ID INT PRIMARY KEY,
+    Proj_Name VARCHAR(50),
+    Dept_ID INT,
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
+);
+SELECT COUNT(Dept_ID) > 1 FROM
+INSERT INTO Projects (Proj_ID, Proj_Name, Dept_ID)
+VALUES
+(201, 'Recruitment Drive', 1),
+(202, 'Budget Analysis', 2),
+(203, 'System Upgrade', 3),
+(204, 'Ad Campaign', 4),
+(205, 'Training Program', 1);
+
+-- Q. Find the names of employees who work in the 'HR' department.
+SELECT `Emp_Name` FROM `Employees` WHERE `Dept_ID` = (
+    SELECT `Dept_ID` FROM `Departments` WHERE `Dept_Name` = 'HR'
+);
+
+-- Q.List the names of departments that have no employees.
+SELECT `Dept_Name` FROM `Departments` WHERE `Dept_ID` NOT IN (
+    SELECT `Dept_ID` FROM  `Employees` 
+    WHERE `Dept_ID` IS NOT NULL 
+);
+
+-- Q.Display the name of the department where the employee named 'Alice' works.
+ SELECT `Dept_Name` FROM `Departments` WHERE `Dept_ID` = (
+    SELECT `Dept_ID` FROM `Employees` WHERE `Emp_Name` = 'Alice'
+ );
+
+ -- Q.Retrieve the names of employees who are working in departments that manage more than 3 projects
+ SELECT `Emp_Name` FROM `Employees` WHERE `Dept_ID` IN (
+    SELECT `Dept_ID` FROM `Projects` GROUP BY `Dept_ID` HAVING COUNT(`Proj_ID`) > 2
+ );
+ -- EXTRA QUESTION
+ SELECT * FROM `Employees` WHERE `Salary` > (
+    SELECT AVG(`Salary`) FROM `Employees`
+ );
+ SELECT AVG(`Salary`) from `Employees`;
+
+
+ -- Q.Identify the highest-paid employee in each department.
+ SELECT `Dept_ID` , `Emp_Name` FROM `Employees` WHERE `Salary` IN(
+
+ );
+ SELECT E.*
+FROM Employees AS E
+WHERE E.Salary = (
+    SELECT MAX(Salary)
+    FROM Employees
+    WHERE Dept_ID = E.Dept_ID
+);
+SELECT E.* FROM `Employees`AS E WHERE E.`Salary` IN
+ (
+    SELECT MAX(`Salary`) FROM `Employees` WHERE `Dept_ID` = E.`Dept_ID`
+ )
+
+ -- Q.Display the name of the department where the employee named 'Alice' works.
+ SELECT `Dept_Name` FROM `Departments` WHERE `Dept_ID` =
+ (
+    SELECT `Dept_ID` FROM `Employees` WHERE `Emp_Name` = 'Alice'
+ );
+-- Q.Find employees who are not working on any project.
+SELECT `Emp_Name` FROM `Employees` WHERE `Dept_ID` NOT IN(
+    SELECT `Dept_ID` FROM `Projects`
+);
+-- Q.List all employees whose salary is higher than any employee in the 'Finance' department.;
+SELECT * FROM `Employees` WHERE `Salary` > ANY
+(
+    SELECT `Salary` FROM  `Employees` WHERE `Dept_ID` = 
+    (
+      SELECT `Dept_ID` FROM `Departments` WHERE `Dept_Name` = 'Finance'
+    )
+);
+
+ -- Q.Retrieve the names of employees who work on the same department as the employee named 'Alice'.
+ SELECT E.`Emp_Name` FROM `Employees` AS E WHERE `Dept_ID` = 
+ (
+   -- SELECT `Dept_ID` FROM `Departments` WHERE `Dept_ID` = (
+        SELECT `Dept_ID` FROM `Employees` WHERE `Emp_Name` = 'Diana'
+    -- )
+ )
+ -- AND E.`Emp_Name` <> 'Diana';;
+ ;
+
+ -- ****************************************************CORRELATED SUBQUERIES********************************
+ -- Q.Retrieve the department name and the number of employees in each department
+ -- using a correlated subquery.
+
+SELECT D.`Dept_Name` ,(
+    SELECT COUNT(`Emp_ID`) FROM `Employees` WHERE `Dept_ID` = D.`Dept_ID` 
+) FROM `Departments` AS D;
+
+-- Retrieve the name of each department and the total salary of employees
+-- in that department using a correlated subquery.
+SELECT D.`Dept_Name` ,
+(
+    SELECT SUM(`Salary`) FROM `Employees` AS E 
+    WHERE `E`.`Dept_ID` = D.`Dept_ID`
+) AS TOTAL_SALARY 
+FROM `Departments` AS D;
+
+-- 1. Retrieve the department name and the number of employees
+-- in each department using a correlated subquery.
+ SELECT D.`Dept_Name` ,
+ (
+    SELECT COUNT(`Emp_ID`) FROM `Employees` AS E 
+    WHERE `E`.`Dept_ID` = D.`Dept_ID`
+ ) AS NO_OF_EMP
+ FROM `Departments` AS D;
+
+
+ --  List employees whose salary is higher than the department's average salary where they work.
+
+--  SELECT E.`Emp_Name` , 
+--  (
+--     SELECT AVG(`Salary`) FROM `Employees` AS E1 WHERE  E.`Salary` > `E1`.`Salary`
+--  ) AS Tabl 
+--  FROM `Employees` AS E;
+
+SELECT E.`Emp_Name` , E.`Salary` ,D.`Dept_Name` FROM `Employees` AS E JOIN 
+`Departments` AS D ON E.`Dept_ID` = `D`.`Dept_ID`
+WHERE E.`Salary` > (
+    SELECT AVG(`Salary`) FROM `Employees` WHERE `Dept_ID` = `E`.`Dept_ID`
+);
+
+Find the project(s) with the maximum number of employees assigned.
+sql
+Copy code
