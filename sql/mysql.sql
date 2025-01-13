@@ -445,7 +445,6 @@ CREATE TABLE Employees (
     Salary DECIMAL(10, 2),
     FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
 );
-
 INSERT INTO Employees (Emp_ID, Emp_Name, Dept_ID, Salary)
 VALUES
 (101, 'Alice', 1, 50000),
@@ -581,6 +580,88 @@ WHERE E.`Salary` > (
     SELECT AVG(`Salary`) FROM `Employees` WHERE `Dept_ID` = `E`.`Dept_ID`
 );
 
-Find the project(s) with the maximum number of employees assigned.
-sql
-Copy code
+-- Q.Find the project(s) with the maximum number of employees assigned.
+-- CREATE TABLE Project_Employees (
+--     Proj_ID INT,
+--     Emp_ID INT,
+--     FOREIGN KEY (Proj_ID) REFERENCES Projects(Proj_ID),
+--     FOREIGN KEY (Emp_ID) REFERENCES Employees(Emp_ID)
+-- );
+
+-- INSERT INTO Project_Employees (Proj_ID, Emp_ID) VALUES
+-- (201, 101),
+-- (201, 104),
+-- (202, 102),
+-- (203, 103),
+-- (203, 105),
+-- (204, 105),
+-- (205, 101),
+-- (205, 104),
+-- (205, 105);
+
+SELECT P.Proj_Name FROM `Projects` AS P WHERE P.`Dept_ID` =
+(
+ SELECT `Dept_ID` FROM `Projects` GROUP BY `Dept_ID` ORDER BY COUNT(`Proj_ID`) DESC 
+ LIMIT 1
+);
+-- Find the project(s) managed by the department with the most employees
+SELECT P.Proj_Name 
+FROM Projects AS P
+WHERE P.Dept_ID = (
+    SELECT E.Dept_ID 
+    FROM Employees AS E
+    GROUP BY E.Dept_ID
+    ORDER BY COUNT(E.Emp_ID) DESC
+    LIMIT 1
+);
+
+-- Q.Identify employees who are working on all projects of the 'Marketing' department.
+ SELECT  * FROM `Employees` AS E WHERE E.`Dept_ID` = 
+ (
+    SELECT `Dept_ID` FROM `Departments` AS D  WHERE `D`.`Dept_Name` = 'Marketing'
+ );
+-- Q1. Find the names of employees who work in departments that have a project named 'System Upgrade'.
+SELECT E.`Emp_Name` FROM `Employees` AS E WHERE E.`Dept_ID` = (
+    SELECT `Dept_ID` FROM `Projects` WHERE `Proj_Name` ='System Upgrade'
+ );
+
+-- Q2. List the names of employees who earn more than the average salary of their department.
+SELECT E.`Emp_Name` FROM `Employees` AS E WHERE E.`Salary` >= 
+     (
+        SELECT AVG(`Salary`)
+        FROM `Employees` AS ES
+        WHERE `E`.`Dept_ID` = `ES`.`Dept_ID`
+     )
+     
+
+-- Q3. Retrieve the names of departments that have more than 2 projects and list the employees working in those departments.
+SELECT  D.`Dept_Name`, GROUP_CONCAT(E.`Emp_Name` ORDER BY E.`Emp_Name`) AS 'Employees'
+FROM `Departments` AS D 
+JOIN `Employees` AS E ON D.`Dept_ID` = E.`Dept_ID`
+WHERE D.`Dept_ID` IN (
+SELECT `Dept_ID` 
+FROM `Projects` 
+GROUP BY `Dept_ID` 
+HAVING COUNT(`Proj_ID`) > 1
+) GROUP BY `D`.`Dept_Name`;
+
+
+-- Q4. Identify the employees who are working on projects managed by the 'IT' department.
+SELECT E.`Emp_Name` FROM `Employees` AS E WHERE E.`Dept_ID` IN (
+    SELECT P.`Proj_ID` FROM `Projects` AS P WHERE P.`Dept_ID` =(
+        SELECT D.`Dept_ID` FROM `Departments` WHERE D.`Dept_Name` = 'IT'
+    )
+);
+-- SELECT E.`Emp_Name`
+-- FROM `Employees` AS E
+-- JOIN `Projects` AS P ON E.`Dept_ID` = P.`Dept_ID`
+-- JOIN `Departments` AS D ON E.`Dept_ID` = D.`Dept_ID`
+-- WHERE D.`Dept_Name` = 'IT';
+
+
+-- Q5. Find the names of employees who are not assigned to any project.
+-- Q6. List the names of employees who joined before the year 2020 and work in the 'Finance' department.
+-- Q7. Retrieve the names of employees who work in the same department as the highest-paid employee.
+-- Q8. Find the departments that have the highest total salary for their employees.
+-- Q9. List the names of employees who work in departments that have no projects.
+-- Q10. Identify the employees who are working on the maximum number of projects.
