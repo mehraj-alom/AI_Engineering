@@ -647,9 +647,11 @@ HAVING COUNT(`Proj_ID`) > 1
 
 
 -- Q4. Identify the employees who are working on projects managed by the 'IT' department.
-SELECT E.`Emp_Name` FROM `Employees` AS E WHERE E.`Dept_ID` IN (
-    SELECT P.`Proj_ID` FROM `Projects` AS P WHERE P.`Dept_ID` =(
-        SELECT D.`Dept_ID` FROM `Departments` WHERE D.`Dept_Name` = 'IT'
+SELECT E.`Emp_Name` FROM `Employees` AS E WHERE E.`Dept_ID` 
+IN (
+    SELECT P.`Dept_ID` FROM `Projects` AS P WHERE P.`Dept_ID` =
+    (
+        SELECT D.`Dept_ID` FROM `Departments` AS D WHERE D.`Dept_Name` = 'IT'
     )
 );
 -- SELECT E.`Emp_Name`
@@ -660,8 +662,51 @@ SELECT E.`Emp_Name` FROM `Employees` AS E WHERE E.`Dept_ID` IN (
 
 
 -- Q5. Find the names of employees who are not assigned to any project.
+    SELECT E.`Emp_Name` FROM `Employees` AS E
+    WHERE E.`Dept_ID` NOT IN (
+        SELECT  DISTINCT `Dept_ID` FROM `Projects`
+    );
 -- Q6. List the names of employees who joined before the year 2020 and work in the 'Finance' department.
+
+
 -- Q7. Retrieve the names of employees who work in the same department as the highest-paid employee.
--- Q8. Find the departments that have the highest total salary for their employees.
+
+
+-- INSERT INTO Employees (Emp_ID, Emp_Name, Dept_ID, Salary)
+-- VALUES
+-- (107, 'Ace', 1, 60000);
+
+-- INSERT INTO Employees (Emp_ID, Emp_Name, Dept_ID, Salary)
+-- VALUES
+-- (106, 'Ace1', 1, 70000);
+
+
+-- INSERT INTO Employees (Emp_ID, Emp_Name, Dept_ID, Salary)
+-- VALUES
+-- (109, 'Ace11', 1, 90000);
+-- INSERT INTO Employees (Emp_ID, Emp_Name, Dept_ID, Salary)
+-- VALUES
+-- (110, 'Ace112', 2, 95000);
+
+-- DELETE FROM `Employees` WHERE `Emp_ID` = 107
+
+-- DELETE FROM `Employees` WHERE `Emp_ID` = 106;
+-- DELETE FROM `Employees` WHERE `Emp_ID` = 109;
+-- DELETE FROM `Employees` WHERE `Emp_ID` = 110;
+-- SELECT * FROM `Employees`;
+
+
+SELECT GROUP_CONCAT(E.`Emp_Name` ORDER BY `E`.`Emp_Name`) AS' Employees '
+FROM `Employees` AS E 
+WHERE E.`Dept_ID` IN (
+    SELECT `Dept_ID` 
+    FROM `Employees` 
+    WHERE `Salary` = (
+        SELECT MAX(`Salary`) 
+        FROM `Employees`
+    )
+) ;
+   --************
+-- Q8. Find the departments that have the highest total salary for their employees.(INTERESTINGGGG) **********
 -- Q9. List the names of employees who work in departments that have no projects.
 -- Q10. Identify the employees who are working on the maximum number of projects.
