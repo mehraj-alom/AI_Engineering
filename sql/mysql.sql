@@ -708,5 +708,39 @@ WHERE E.`Dept_ID` IN (
 ) ;
    --************
 -- Q8. Find the departments that have the highest total salary for their employees.(INTERESTINGGGG) **********
+    SELECT `Dept_Name` FROM `Departments` WHERE `Dept_ID` = 
+    (
+        SELECT `Dept_ID` FROM `Employees` GROUP BY `Dept_ID` ORDER BY SUM(`Salary`) DESC LIMIT 1
+    );
 -- Q9. List the names of employees who work in departments that have no projects.
+      SELECT `Emp_Name` FROM `Employees` WHERE `Dept_ID` NOT IN (
+        SELECT `Dept_ID` FROM `Projects` GROUP BY `Dept_ID`
+      );
 -- Q10. Identify the employees who are working on the maximum number of projects.
+    SELECT `Emp_Name` FROM `Employees` WHERE `Dept_ID` = (
+        SELECT `Dept_ID` FROM `Projects`  ORDER BY Count(`Proj_ID`) 
+    );
+--     SELECT `Emp_Name` 
+--     FROM `Employees` 
+--     WHERE `Dept_ID` IN (
+--     SELECT `Dept_ID` 
+--     FROM `Projects` 
+--     GROUP BY `Dept_ID` 
+--     ORDER BY COUNT(`Proj_ID`) DESC 
+--     LIMIT 1
+-- );
+
+SELECT E.`Emp_Name`
+FROM `Employees` AS E
+WHERE E.`Dept_ID` = (
+    SELECT `Dept_ID`
+    FROM (
+        SELECT `Dept_ID`, COUNT(`Proj_ID`) AS ProjectCount
+        FROM `Projects`
+        GROUP BY `Dept_ID`
+        ORDER BY ProjectCount DESC
+        LIMIT 1
+    ) AS SubQuery
+);
+
+
