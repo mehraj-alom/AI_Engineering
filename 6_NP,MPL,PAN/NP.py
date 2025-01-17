@@ -76,3 +76,17 @@ print(np.linspace(0,10,7)) # (starting , end , number of elements)
 # Specify The type of data 
 z = np.ones(5,dtype=np.int64)
 print(z)
+# Adding, removing, and sorting elements ----------------------->
+array_example = np.array([[[0, 1, 2, 3],
+                           [4, 5, 6, 7]],
+                          [[0, 1, 2, 3],
+                           [4, 5, 6, 7]],
+                          [[0 ,1 ,2, 3],
+                           [4, 5, 6, 7]]])
+# Dimension of the array
+print(array_example.ndim) # ------->
+# Size of the array (starts counting from 1)
+print(array_example.size) # -------->
+# 
+print(array_example.shape)
+
