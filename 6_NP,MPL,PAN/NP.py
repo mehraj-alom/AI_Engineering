@@ -66,6 +66,14 @@ print(np.ones(9))
 #     is speed - just make sure to fill every element afterwards!
 print(np.empty(5))
 
+# np.eye --> This function creates an 2d array (matrix) with diagonals values 1 , it requrires a posiitional argumentt
+print(np.eye(4,4)) # np.eye (row,column(optional))
+
+# np.diag --> This function creates a matrix with diagonal as given values and rest as zero 
+# it takes two positioanal arguments , 1. array that contain diagonal elements , 2(optional) to shift the 
+# diagonal to  a specific range
+print(np.diag([2,5,7,9,0,4,5],-1))  # np.diag(diagonal_elemnts , (optioanl) to shift the diagonal )
+
 # array with a range of elements
 # --> initialized with a range of elements 
 print(np.arange(10))
@@ -87,6 +95,30 @@ array_example = np.array([[[0, 1, 2, 3],
 print(array_example.ndim) # ------->
 # Size of the array (starts counting from 1)
 print(array_example.size) # -------->
-# 
+# Shape of the array
 print(array_example.shape)
+# To get the diagonal elements 
+# --> print(np.diag(array_example)) # Error because it works only with 1D (vector) or 2D (matrix)
+print(np.diag(arr))
+# To generate Random,Number 
+print("HERE IT IS ")
+print(np.random.rand(2,3))
+# --> np.random.randint(0.1,0.2,50) # Error beacuse randint generate random integer number not works with
+# floating numbers 
+print(np.random.uniform(0.1,0.2,50)) # (Max , min , Number of value to generate )
+print(''.join(np.random.choice(list('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*'),15)))
+#                                             #np.random.choice(positioanlargumnet, Number of char to gen)
+ 
 
+
+# Can you reshape an array?
+
+a = np.arange(6)
+print(a)
+
+b = a.reshape(2,3)
+print(b)
+         #other ways 
+print(np.reshape(a,(3,2),"A"))  #np.reshape(a, shape=(3, 2), order="A")
+print(np.reshape(a,(3,2),"C"))
+print(np.reshape(a,(3,2),"F"))
