@@ -102,7 +102,7 @@ print(array_example.shape)
 print(np.diag(arr))
 # To generate Random,Number 
 print("HERE IT IS ")
-print(np.random.rand(2,3))
+print(np.random.rand(2,3)) # Rand gives random number between 0 and 1 
 # --> np.random.randint(0.1,0.2,50) # Error beacuse randint generate random integer number not works with
 # floating numbers 
 print(np.random.uniform(0.1,0.2,50)) # (Max , min , Number of value to generate )
@@ -122,3 +122,61 @@ print(b)
 print(np.reshape(a,(3,2),"A"))  #np.reshape(a, shape=(3, 2), order="A")
 print(np.reshape(a,(3,2),"C"))
 print(np.reshape(a,(3,2),"F"))
+
+
+# Indexing and slicing
+
+a = np.array([[1 , 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+print(a)
+print(a[a > 6]) # -->
+print(a[a%2==0]) # --> 
+print(a[(a>3) & (a<9)])
+
+#np.nonzero() --> In this example, a tuple of arrays was returned: one for each dimension.
+# The first array represents the row indices where these values are found, and the second array 
+# represents the column indices where the values are found.
+b = np.nonzero(a < 8)
+print(b)
+# print (np.nonzero(a==0.25))
+
+cordinates = list(zip(a[0],a[1],a[2])) # Zip combines two or more arrays together 
+for chord in cordinates :
+    print(chord)
+
+# Vstack & hstack 
+# -----> vstack stacks two array vertically and hstack stacks two or more arrays horizontally
+a1 = np.array([[1, 1],
+               [2, 2]])
+
+a2 = np.array([[3, 3],
+               [4, 4]])
+a3 = np.array([[5,5],
+            [6,6]])
+print(np.vstack((a1,a2,a3)))
+print(np.hstack((a1,a2,a3)))
+
+# hsplit (array_name , (indeces where to split))
+# --> this splits the array into several parts acc0rding to need 
+y = np.arange(1,25).reshape(2,12)
+print(y)
+z = np.hsplit(y, 3)
+print(z)
+n = np.hsplit(y,(3,4,5,6))
+print(n)
+
+# Basic array operations
+# This section covers addition, subtraction, multiplication, division
+
+data = np.array([1,2,3,4])
+ones = np.ones(4,dtype=np.int64)
+print(data+ones)
+print(data*ones)
+print(data/ones)
+print(data-ones)
+print(data.sum())
+let = np.array([[1,2],[3,4],[5,6]])
+print(let.sum(0)) # axis 0 is vertyical operation 
+print(let.sum(1)) # axis 1 is horizontal operation 
+print(let.ndim)
+print(let.shape)
+print(a1.dot(a2))
