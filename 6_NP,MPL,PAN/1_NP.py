@@ -179,4 +179,4 @@ print(let.sum(0)) # axis 0 is vertyical operation
 print(let.sum(1)) # axis 1 is horizontal operation 
 print(let.ndim)
 print(let.shape)
-print(a1.dot(a2))
+print(a1.dot(a2)) #matrix product 
