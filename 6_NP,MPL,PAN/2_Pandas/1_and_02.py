@@ -1,10 +1,14 @@
 import pandas as pd 
 df = pd.read_csv("/home/mehrajofficial000/AI_Engineering/6_NP,MPL,PAN/weather_data.csv")
+print("1")
 print(df)
 # Shape of the dataframe 
+print("2")
 print(df.shape)
 rows, columns = df.shape # this can also be done like this 
+print("3","\n")
 print(rows)
+print("4")
 print(columns)
 # To get some rows instaed of all 
 print(df.head(3)) # it gives first three rows 
@@ -38,4 +42,15 @@ print(df.describe())
 print(df["Temperature (°C)"] > 12) # returns the vales with either true or false
 print(df[df["Temperature (°C)"]>12],"\n") # conditinally giving the output 
 # Q. give me the day when the temperature was maximum 
-print(df[df["Temperature (°C)"] == df["Temperature (°C)"].max()])
+print(df[df["Temperature (°C)"] == df["Temperature (°C)"].max()],"\n")
+print(df[["Date", "Temperature (°C)"]][df["Temperature (°C)"] == df["Temperature (°C)"].max()])
+
+
+# Set index method --> it sets the passed value as the index 
+
+df.set_index("Date",inplace=True)
+print(df,"\n")
+print(df.loc["2025-01-08"])  # What is loc function does ????
+# to reset the index 
+df.reset_index(inplace=True)
+print(df)
