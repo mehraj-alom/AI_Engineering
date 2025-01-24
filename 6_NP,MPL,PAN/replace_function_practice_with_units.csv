@@ -1,0 +1,6 @@
+Date,Temperature (°C),Windspeed (mph),Event,Score
+2025-01-01,32°C,10 mph,Rain,Excellent
+2025-01-02,45°C,15 mph,Sunny,Good
+2025-01-03,28°C,8 mph,Snow,Average
+2025-01-04,35°C,12 mph,Cloudy,Poor
+2025-01-05,42°C,9 mph,Sunny,Good

@@ -1,0 +1,26 @@
+City,Temperature (°C),Windspeed (mph),Event
+Chicago,24,19,Rain
+Chicago,7,8,Sunny
+Los Angeles,-4,16,Cloudy
+Los Angeles,39,15,Cloudy
+New York,7,28,Sunny
+New York,16,26,Snow
+New York,11,5,Sunny
+Los Angeles,5,7,Snow
+Los Angeles,-7,9,Storm
+Chicago,-7,18,Cloudy
+Los Angeles,-1,26,Storm
+New York,-4,18,Snow
+New York,37,5,Rain
+Chicago,34,27,Snow
+Los Angeles,30,5,Storm
+New York,38,7,Storm
+Los Angeles,31,13,Storm
+Los Angeles,32,6,Storm
+Los Angeles,7,17,Storm
+New York,36,10,Sunny
+New York,29,24,Storm
+Chicago,40,19,Sunny
+New York,23,27,Cloudy
+New York,30,14,Cloudy
+New York,8,22,Cloudy
