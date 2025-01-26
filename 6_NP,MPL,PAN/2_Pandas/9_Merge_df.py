@@ -39,3 +39,7 @@ print("5__\n",merg,"\n") #5__
 # 1  Los Angeles             75          70          70             75 
 merg = pd.merge(df3,df4,on="city",suffixes=("_left","_rinht")) # it removes x and y and adds _left _right
 print("6__\n",merg,"\n") 
+# 6__
+#            city  temperature_left  humidity_left  humidity_rinht  temperature_rinht
+# 0     New York                60             65              65                 60
+# 1  Los Angeles                75             70              70                 75 
