@@ -16,3 +16,4 @@ print(rng,"\n")
 #when there are wholes in data we fill it using asfreq 
 
 print("4__",df.asfreq('D',method='pad'),"\n")
+
