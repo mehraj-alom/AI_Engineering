@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+
 # Create a yearly period object
 y = pd.Period('2016')
 print(type(y))  # Output the type of the period object
@@ -15,7 +16,7 @@ print(m.start_time)  # Output the start time of the monthly period
 print(m.end_time)  # Output the end time of the monthly period
 
 # Add 1 month to the monthly period object and output the result
-print("3__\n", m + 1, "\n")
+print("3__\n", m + 1, "\n")  # Output: 2026-02
 
 # Create a daily period object
 d = pd.Period("2016", freq="D")
@@ -37,7 +38,6 @@ print("5__\n", Q)  # Output the quarterly period object with fiscal year ending 
 print(Q.start_time)  # Output the start time of the quarterly period
 print(Q.end_time)  # Output the end time of the quarterly period
 print(Q - 1, "\n")  # Subtract 1 quarter from the quarterly period object and output the result
-
 
 # Arithmetic operations on periods
 
@@ -62,25 +62,27 @@ print(min_p.start_time)  # Output the start time of the minute period
 print(min_p.end_time)  # Output the end time of the minute period
 print(min_p + 15, "\n")  # Add 15 minutes to the minute period object and output the result
 
-
-
 # PERIOD INDEX 
-p = pd.period_range(start="2025",periods=10,freq="Q")
-print("6__\n",p,"\n")
-ps = pd.Series(np.random.rand(len(p)),p)
-print(ps,"\n")
-print(ps["2026Q3"],"\n")
-print(ps["2026"],"\n")
-print(ps["2025":"2026"])
-#Comment Someone can change period index to datetime index 
-idx = p.to_timestamp()
-print(idx,"\n")
-# Also someone can change the datetime to period index 
-idx2 = idx.to_period()
-print(idx2,"\n")
+# Create a period range of 10 quarters starting from 2025
+p = pd.period_range(start="2025", periods=10, freq="Q")
+print("6__\n", p, "\n")  # Output the period range
 
-#Exercise 
-# Create a DataFrame with 5 quarters in a row with revenue, expenses, and profit
+# Create a Series with random values indexed by the period range
+ps = pd.Series(np.random.rand(len(p)), p)
+print(ps, "\n")  # Output the Series
+print(ps["2026Q3"], "\n")  # Output the value for the specific quarter
+print(ps["2026"], "\n")  # Output the values for the specific year
+print(ps["2025":"2026"])  # Output the values for the range of years
+
+# Convert period index to datetime index
+idx = p.to_timestamp()
+print(idx, "\n")  # Output the datetime index
+
+# Convert datetime index back to period index
+idx2 = idx.to_period()
+print(idx2, "\n")  # Output the period index
+
+# Exercise: Create a DataFrame with 5 quarters in a row with revenue, expenses, and profit
 quarters = pd.period_range(start="2025Q1", periods=5, freq="Q")
 data = {
     "Revenue": [15000, 16000, 17000, 18000, 19000],
@@ -89,14 +91,17 @@ data = {
 }
 df = pd.DataFrame(data, index=quarters)
 print("DataFrame with 5 quarters:\n", df)
-# df = df.T
-# print("\n",df)
+
+# Add start and end dates to the DataFrame
 df["Start_Date"] = df.index.map(lambda x: x.start_time)
 df = df[["Start_Date", "Revenue", "Expenses", "Profit"]]
 print("\n", df)
+
 # Create a crosstab of Revenue and Expenses
 df1 = pd.crosstab(df["Revenue"], df["Expenses"], margins=True)
-print("\n","Crosstab of Revenue and Expenses:\n", df1)
+print("\n", "Crosstab of Revenue and Expenses:\n", df1)
+
+# Add end dates to the DataFrame and format dates
 df["End_Date"] = df.index.map(lambda x: x.end_time)
 df["Start_Date"] = df["Start_Date"].dt.date
 df["End_Date"] = df["End_Date"].dt.date
