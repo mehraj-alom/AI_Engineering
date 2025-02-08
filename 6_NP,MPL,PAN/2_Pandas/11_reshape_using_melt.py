@@ -7,6 +7,7 @@ df = pd.DataFrame({
     "Chennai":[75,77,75,82,83,81,87],
     "Berlin":[41,43,45,38,30,45,47]
 })
+print(df,"\n")
 print("1__\n",df,"\n")
 melted = pd.melt(df,id_vars=["Day"])
 print("2__\n",melted,"\n") # In Id_vars we do keep the column that we want to keep intect (Not change accordigly )
