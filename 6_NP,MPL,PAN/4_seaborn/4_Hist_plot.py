@@ -28,7 +28,8 @@ sns.displot(
     kde=True,  # Disable KDE for clarity
     edgecolor="black",  # Add bar borders
     linewidth=0.5,
-    log_scale=True
+    # log_scale=True
+    
     
 )
 
@@ -38,5 +39,4 @@ plt.xlabel("Bill Depth (mm)", fontsize=12)
 plt.ylabel("Frequency", fontsize=12)
 plt.xticks(bins)  # Explicitly show all bin edges
 plt.grid(axis="y", linestyle="--", alpha=0.5)  # Add gridlines for readability
-
 plt.show()
