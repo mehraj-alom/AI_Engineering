@@ -24,3 +24,7 @@ sns.scatterplot(data=df,
                 # sizes=(50, 400,)  # Increased size range for better visibility
                 )  # Corrected markers for species
 plt.show()
+# kde: Stands for Kernel Density Estimate. When set to True, it adds a KDE plot to the histogram,
+# which is a smoothed estimate of the data distribution.
+# rug: When set to True, it adds a rug plot to the histogram, 
+# which is a series of small vertical lines at the bottom of the plot representing individual data points.
