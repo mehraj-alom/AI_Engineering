@@ -30,4 +30,4 @@ sns.boxplot(
 plt.show()              # Display the plot
 # Create a box plot for single variable (bill length)
 sns.boxplot(x=df["bill_length_mm"],showmeans=True)
-plt.savefig('box_plot_output.png')  # Save the plot as an image
+plt.show()
