@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  fact-generator:
+    build: ./fact-generator
+    container_name: fact-generator
+    networks:
+      - fact-net
+    ports:
+      - "8000:8000"
+    volumes:
+      - generator_logs:/app/log
+
+  fact-logger:
+    build: ./fact-logger
+    container_name: fact-logger
+    networks:
+      - fact-net
+    volumes:
+      - logger_logs:/app/log
+
+networks:
+  fact-net:
+
+volumes:
+  generator_logs:
+  logger_logs:
